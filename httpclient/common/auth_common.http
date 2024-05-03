@@ -1,0 +1,31 @@
+### Authorization by token as user, part 1. Retrieve and save token.
+POST {{baseUrl}}/token
+Content-Type: application/json
+Accept: application/json
+
+{
+  "login": "{{userLogin}}",
+  "password": "{{userPassword}}"
+}
+
+> {%
+client.global.set("userAuthToken", response.body.token);
+client.global.set("refreshToken", response.body.refreshToken);
+%}
+
+### Refresh Token
+POST {{baseUrl}}/token/refresh
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{refreshToken}}
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+> {%
+client.global.set("userAuthToken", response.body.token);
+client.global.set("refreshToken", response.body.refreshToken);
+%}
+
+

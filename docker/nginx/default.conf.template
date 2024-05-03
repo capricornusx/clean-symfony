@@ -1,0 +1,40 @@
+server {
+    listen 80;
+    index index.php index.html;
+    root /app/public;
+    server_name ${DYNAMIC_ENVIRONMENT_URL};
+    fastcgi_buffers 16 16k;
+    fastcgi_buffer_size 32k;
+    client_max_body_size 20m;
+
+    location / {
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'POST, GET, PUT, DELETE, PATCH, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' '*' always;
+            add_header 'Access-Control-Max-Age' 1728000 always;
+            add_header 'Content-Type' 'application/json; text/plain; charset=utf-8' always;
+            add_header 'Content-Length' 0 always;
+
+            return 204;
+        }
+
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'POST, GET, PUT, DELETE, PATCH, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' '*' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
+
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass api:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param PHP_IDE_CONFIG "serverName=petproject";
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+}

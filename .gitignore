@@ -1,0 +1,53 @@
+###> symfony/framework-bundle ###
+.env.local
+.env.local.php
+.env.*.local
+config/secrets/prod/prod.decrypt.private.php
+public/storage/
+public/bundles/
+public/swagger/*.json
+!public/swagger/postman.base.json
+var/
+vendor/
+storage/
+test-storage/
+###< symfony/framework-bundle ###
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+.phpunit.xml
+###< symfony/phpunit-bridge ###
+
+*.local.yml
+
+###> phpunit/phpunit ###
+/report_junit.xml
+###< phpunit/phpunit ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+.php-cs-fixer.php
+###< friendsofphp/php-cs-fixer ###
+
+.idea
+.vscode
+!/.idea/fileColors.xml
+!/.idea/scopes/
+.DS_Store
+lsp
+
+httpclient/leadzvon/http-client.private.env.json
+sandbox.http
+config/supervisor/*.conf
+get_dump_prod.sh
+*.sql
+docker-compose.override.yml
+
+### local vars ###
+.envrc
+
+#docker
+docker/php/common

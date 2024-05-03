@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="3"
+    cacheDirectory="var/psalm"
+    findUnusedBaselineEntry="false"
+    findUnusedCode="false"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <directory name="tests"/>
+        <directory name="lib"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name="src/Migrations"/>
+            <directory name="src/Application/Cli/Sandbox"/>
+        </ignoreFiles>
+    </projectFiles>
+    <plugins>
+        <pluginClass class="Lib\Psalm\Plugin\PsalmStubPlugin"/>
+        <pluginClass class="Fp\PsalmPlugin\FunctionalPlugin"/>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+    </plugins>
+    <issueHandlers>
+        <DuplicateFunction errorLevel="suppress">
+            <errorLevel type="suppress">
+                <directory name="lib"/>
+                <directory name="src"/>
+            </errorLevel>
+        </DuplicateFunction>
+        <PropertyNotSetInConstructor errorLevel="suppress">
+            <errorLevel type="suppress">
+                <directory name="src"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <DuplicateClass errorLevel="suppress">
+            <errorLevel type="suppress">
+                <directory name="lib"/>
+                <directory name="src"/>
+            </errorLevel>
+        </DuplicateClass>
+        <Trace errorLevel="error"/>
+    </issueHandlers>
+</psalm>

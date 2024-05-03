@@ -1,0 +1,63 @@
+version: '3.6'
+services:
+  nginx:
+    container_name: nginx
+    image: nginxinc/nginx-unprivileged:1.23.3-alpine
+    environment:
+      - DYNAMIC_ENVIRONMENT_URL=_
+    volumes:
+      - ./public:/app/public
+      - ./storage:/app/storage
+      - ./docker/nginx/:/etc/nginx/templates/
+    ports:
+      - "8028:80"
+    depends_on:
+      - api
+    networks:
+      - petprodject
+
+  api:
+    container_name: api
+    hostname: lz-api
+    user: 1000:1000
+    build:
+      context: .
+      dockerfile: ./docker/base/Dockerfile
+      args:
+        - PECL_EXTENSIONS=sync amqp redis xdebug # замена аргумента (добавляем xDebug)
+        - CACHE_FULL=docker.io/library
+        - COMPOSER_FUND=0
+    working_dir: /app
+    environment:
+      XDEBUG_CONFIG: client_host=${XDEBUG_HOST:-localhost}
+      PHP_IDE_CONFIG: serverName=petprodject
+      COMPOSER_CACHE_DIR: /app/var/cache/composer
+    volumes:
+      - ./:/app
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    networks:
+      - petprodject
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.1-alpine
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "54324:5432"
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: petprodject
+    command: postgres -c log_statement=all # Вывод текущих sql запросов в stdout
+    networks:
+      - petprodject
+
+networks:
+  petprodject:
+    name: petprodject
+
+volumes:
+  postgres:

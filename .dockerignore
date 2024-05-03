@@ -1,0 +1,15 @@
+.gitlab-ci.yml
+.gitlab
+.idea
+.vscode
+.git
+
+docker-*.yml
+
+README.md
+
+Makefile
+makefile.nix
+
+docker/*/Dockerfile
+.envrc
