@@ -14,11 +14,11 @@ services:
     depends_on:
       - api
     networks:
-      - petprodject
+      - petproject
 
   api:
     container_name: api
-    hostname: lz-api
+    hostname: api
     user: 1000:1000
     build:
       context: .
@@ -30,7 +30,7 @@ services:
     working_dir: /app
     environment:
       XDEBUG_CONFIG: client_host=${XDEBUG_HOST:-localhost}
-      PHP_IDE_CONFIG: serverName=petprodject
+      PHP_IDE_CONFIG: serverName=petproject
       COMPOSER_CACHE_DIR: /app/var/cache/composer
     volumes:
       - ./:/app
@@ -38,7 +38,7 @@ services:
       - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     networks:
-      - petprodject
+      - petproject
 
   postgres:
     container_name: postgres
@@ -53,11 +53,11 @@ services:
       POSTGRES_DB: petprodject
     command: postgres -c log_statement=all # Вывод текущих sql запросов в stdout
     networks:
-      - petprodject
+      - petproject
 
 networks:
-  petprodject:
-    name: petprodject
+  petproject:
+    name: petproject
 
 volumes:
   postgres:

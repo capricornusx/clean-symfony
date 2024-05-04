@@ -39,15 +39,11 @@ test-storage/
 .DS_Store
 lsp
 
-httpclient/leadzvon/http-client.private.env.json
 sandbox.http
 config/supervisor/*.conf
-get_dump_prod.sh
 *.sql
 docker-compose.override.yml
 
 ### local vars ###
 .envrc
 
-#docker
-docker/php/common

@@ -1,0 +1,16 @@
+# config/packages/security.yaml
+security:
+  providers:
+    in_memory:
+      memory:
+        users:
+          lg:
+            roles: 'ROLE_INTEGRATION'
+
+  firewalls:
+    integration:
+      http_basic: ~
+      pattern: ^/(input)
+      stateless: true
+  access_control:
+    - { path: ^/input,  roles: ROLE_INTEGRATION }
