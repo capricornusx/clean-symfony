@@ -1,6 +1,6 @@
 ARG CACHE_FULL
 
-FROM ${CACHE_FULL}/composer:2.7.1 as compose
+FROM ${CACHE_FULL}/composer:2.8.8 as compose
 FROM ${CACHE_FULL}/php:8.2-fpm-alpine3.19
 
 COPY --from=compose /usr/bin/composer /usr/bin/composer

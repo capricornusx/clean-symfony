@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Throwable;
 
-class HandledHttpExceptionListener
+readonly class HandledHttpExceptionListener
 {
     public function __construct(private NormalizerInterface $normalizer)
     {

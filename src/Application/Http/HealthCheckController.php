@@ -6,13 +6,13 @@ namespace App\Application\Http;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class HealthCheckController extends AbstractController
 {
     public const ROUTE = '/health-check';
 
-    #[Route(path: '/health-check', name: self::class, methods: ['GET'])]
+    #[Route(path: self::ROUTE, name: self::class, methods: ['GET'])]
     public function healthAction(): Response
     {
         /**

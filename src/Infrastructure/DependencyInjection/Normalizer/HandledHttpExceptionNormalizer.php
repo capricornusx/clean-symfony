@@ -7,19 +7,13 @@ namespace App\Infrastructure\DependencyInjection\Normalizer;
 use App\Application\Exception\HandledHttpException;
 use App\Application\Exception\ValidationException;
 use App\Infrastructure\Validation\InputValidationFormatter;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class HandledHttpExceptionNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
+final class HandledHttpExceptionNormalizer implements NormalizerInterface
 {
-    public function supportsNormalization($data, string $format = null): bool
+    public function supportsNormalization($data, string $format = null, $context = []): bool
     {
         return $data instanceof HandledHttpException;
-    }
-
-    public function hasCacheableSupportsMethod(): bool
-    {
-        return true;
     }
 
     public function normalize($object, string $format = null, array $context = []): array
@@ -40,5 +34,10 @@ final class HandledHttpExceptionNormalizer implements NormalizerInterface, Cache
     private function normalizeValidationException(ValidationException $exception): array
     {
         return InputValidationFormatter::format($exception->getViolations());
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [HandledHttpException::class];
     }
 }

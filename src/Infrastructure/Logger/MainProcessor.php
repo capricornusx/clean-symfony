@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Logger;
 
-use Monolog\DateTimeImmutable;
+use DateTimeImmutable;
 use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
 
